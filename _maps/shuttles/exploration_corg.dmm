@@ -278,7 +278,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/exploration)
 "mb" = (
-/obj/machinery/atmospherics/components/unary/shuttle/heater{
+/obj/machinery/atmospherics/components/trinary/shuttle/heater{
 	dir = 4
 	},
 /obj/structure/window/reinforced/survival_pod{

@@ -69,7 +69,7 @@
 			//Check for inop engines
 			if(!E.attached_heater)
 				continue
-			var/obj/machinery/atmospherics/components/unary/shuttle/heater/shuttle_heater = E.attached_heater.resolve()
+			var/obj/machinery/atmospherics/components/trinary/shuttle/heater/shuttle_heater = E.attached_heater.resolve()
 			if(!shuttle_heater)
 				continue
 			if(shuttle_heater.dir != E.dir)
@@ -115,7 +115,7 @@
 /obj/machinery/computer/shuttle_flight/custom_shuttle/proc/get_fuel()
 	var/amount = 0
 	for(var/obj/machinery/shuttle/engine/E as() in shuttle_engines)
-		var/obj/machinery/atmospherics/components/unary/shuttle/heater/shuttle_heater = E.attached_heater?.resolve()
+		var/obj/machinery/atmospherics/components/trinary/shuttle/heater/shuttle_heater = E.attached_heater?.resolve()
 		if(!shuttle_heater)
 			continue
 		var/datum/gas_mixture/air_contents = shuttle_heater.airs[1]

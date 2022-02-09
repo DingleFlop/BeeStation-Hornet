@@ -75,7 +75,7 @@
 		update_engine()
 		return
 	attached_heater = null
-	var/obj/machinery/atmospherics/components/unary/shuttle/heater/as_heater = locate() in heater_turf
+	var/obj/machinery/atmospherics/components/trinary/shuttle/heater/as_heater = locate() in heater_turf
 	if(!as_heater)
 		update_engine()
 		return
@@ -102,7 +102,7 @@
 		icon_state = icon_state_off
 		thruster_active = FALSE
 		return
-	var/obj/machinery/atmospherics/components/unary/shuttle/heater/resolved_heater = attached_heater.resolve()
+	var/obj/machinery/atmospherics/components/trinary/shuttle/heater/resolved_heater = attached_heater.resolve()
 	if(resolved_heater?.hasFuel(1))
 		icon_state = icon_state_closed
 		thruster_active = TRUE
