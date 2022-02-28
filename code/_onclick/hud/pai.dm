@@ -21,7 +21,7 @@
 	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	pAI.paiInterface()
+	pAI.ui_interact(pAI)
 
 /atom/movable/screen/pai/shell
 	name = "Toggle Holoform"
@@ -86,10 +86,11 @@
 	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	if(iscarbon(pAI.card.loc))
-		pAI.hostscan.attack(pAI.card.loc, pAI)
+	var/mob/living/carbon/holder = get(pAI.card.loc, /mob/living/carbon)
+	if(holder)
+		pAI.hostscan.attack(holder, pAI)
 	else
-		to_chat(src, "You are not being carried by anyone!")
+		to_chat(usr, "<span class='warning'>You are not being carried by anyone!</span>")
 		return 0
 
 /atom/movable/screen/pai/crew_manifest
@@ -134,6 +135,20 @@
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.cmd_show_message_log(usr)
+
+/atom/movable/screen/pai/internal_gps
+	name = "Internal GPS"
+	icon_state = "internal_gps"
+	required_software = "internal gps"
+
+/atom/movable/screen/pai/internal_gps/Click()
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/silicon/pai/pAI = usr
+	if(!pAI.internal_gps)
+		pAI.internal_gps = new(pAI)
+	pAI.internal_gps.attack_self(pAI)
 
 /atom/movable/screen/pai/image_take
 	name = "Take Image"
@@ -230,6 +245,11 @@
 // PDA log
 	using = new /atom/movable/screen/pai/pda_msg_show()
 	using.screen_loc = ui_pai_pda_log
+	static_inventory += using
+
+// Internal GPS
+	using = new /atom/movable/screen/pai/internal_gps()
+	using.screen_loc = ui_pai_internal_gps
 	static_inventory += using
 
 // Take image
