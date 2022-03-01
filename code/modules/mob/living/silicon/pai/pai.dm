@@ -75,7 +75,7 @@
 	/// Synthesizer
 	var/obj/item/instrument/piano_synth/internal_instrument
 	/// pAI Newscaster
-	var/obj/machinery/newscaster
+	var/obj/machinery/newscaster/newscaster
 	/// pAI healthanalyzer
 	var/obj/item/healthanalyzer/hostscan
 	/// Internal pAI GPS, enabled if pAI downloads GPS software, and then uses it.
@@ -186,7 +186,7 @@
 
 /mob/living/silicon/pai/proc/process_hack(delta_time)
 	if(hacking_cable?.machine && istype(hacking_cable.machine, /obj/machinery/door) && hacking_cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
-		hackprogress = clamp(hackprogress + (2 * delta_time), 0, HACK_COMPLETE)
+		hackprogress = clamp(hackprogress + (2 * delta_time), 0, 100)
 		hackbar.update(hackprogress)
 	else
 		to_chat(src, "<span class='notice'>Door Jack: Connection to airlock has been lost. Hack aborted.</span>")
@@ -199,7 +199,7 @@
 		if(!QDELETED(card))
 			card.update_icon()
 		return
-	if(hackprogress >= HACK_COMPLETE)
+	if(hackprogress >= 100)
 		hackprogress = 0
 		hacking = FALSE
 		hackbar.Destroy()
