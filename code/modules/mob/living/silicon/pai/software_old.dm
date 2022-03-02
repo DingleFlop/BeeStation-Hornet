@@ -4,7 +4,7 @@
 															//radiation eyes
 															//chem goggs
 															//mesons
-															"crew manifest" = 5,
+															//"crew manifest" = 5,
 															"digital messenger" = 5,
 															//"atmosphere sensor" = 5,
 															"photography module" = 5,
@@ -14,12 +14,12 @@
 															"medical records" = 10,
 															"security records" = 10,
 															"host scan" = 10,
-															"medical HUD" = 20,
-															"security HUD" = 20,
+															//"medical HUD" = 20,
+															//"security HUD" = 20,
 															//"loudness booster" = 20,
 															//"newscaster" = 20,
 															"door jack" = 25,
-															"encryption keys" = 25,
+															//"encryption keys" = 25,
 															//"internal gps" = 35,
 															//"universal translator" = 35
 															)
@@ -89,13 +89,6 @@
 					to_chat(usr, "<span class='notice'>Insufficient RAM available.</span>")
 			else
 				to_chat(usr, "<span class='notice'>Software not found.</span>")
-		if("atmosphere_sensor")
-			if(!holoform)
-				to_chat(usr, "<span class='notice'>You must be mobile to do this!</span>")
-				return FALSE
-			if(!atmos_analyzer)
-				atmos_analyzer = new(src)
-			atmos_analyzer.attack_self(src)
 		if("camera_zoom")
 			aicamera.adjust_zoom(usr)
 		if("change_image")
@@ -117,8 +110,6 @@
 			else
 				to_chat(src, "<span class='warning'>You are not being carried by anyone!</span>")
 				return FALSE
-		if("crew_manifest")
-			ai_roster()
 		if("door_jack")
 			if(params["jack"] == "jack")
 				if(hacking_cable?.machine)
@@ -129,10 +120,6 @@
 				QDEL_NULL(hacking_cable)
 			if(params["jack"]  == "cable")
 				extendcable()
-		if("encryption_keys")
-			to_chat(src, "<span class='notice'>You have [!encryptmod ? "enabled" : "disabled"] encrypted radio frequencies.</span>")
-			encryptmod = !encryptmod
-			radio.subspace_transmission = !radio.subspace_transmission
 		if("host_scan")
 			if(!hostscan)
 				hostscan = new(src)
@@ -142,14 +129,6 @@
 				hostscan.attack_self(usr)
 			if(params["scan"] == "limbs")
 				hostscan.attack_self()
-		if("medical_hud")
-			medHUD = !medHUD
-			if(medHUD)
-				var/datum/atom_hud/med = GLOB.huds[med_hud]
-				med.add_hud_to(src)
-			else
-				var/datum/atom_hud/med = GLOB.huds[med_hud]
-				med.remove_hud_from(src)
 		if("pda")
 			if(isnull(aiPDA))
 				return FALSE
@@ -175,14 +154,6 @@
 				security_records = GLOB.data_core.get_security_records()
 			ui.send_full_update()
 			addtimer(CALLBACK(src, .proc/refresh_again), 3 SECONDS)
-		if("security_hud")
-			secHUD = !secHUD
-			if(secHUD)
-				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
-				sec.add_hud_to(src)
-			else
-				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
-				sec.remove_hud_from(src)
 	return
 
 /**
