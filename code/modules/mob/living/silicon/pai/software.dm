@@ -29,8 +29,7 @@
 	activate()
 
 /datum/pai_software/encryption_keys/activate()
-	to_chat(pai, "<span class='notice'>You have [!pai.encryptmod ? "enabled" : "disabled"] encrypted radio frequencies.</span>")
-	pai.encryptmod = !pai.encryptmod
+	to_chat(pai, "<span class='notice'>You have [!pai.radio.subspace_transmission  ? "enabled" : "disabled"] encrypted radio frequencies.</span>")
 	pai.radio.subspace_transmission = !pai.radio.subspace_transmission
 
 /datum/pai_software/security_hud
