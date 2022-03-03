@@ -77,12 +77,25 @@
 /datum/pai_software/translator/activate()
 	pai.open_language_menu() // Translator isn't a "thing", let's just open the language menu for them
 
+/datum/pai_software/newscaster
+	name = "Newscaster"
+	cost = 20
+	var/obj/machinery/newscaster/machine
+	var/machine_type = /obj/machinery/newscaster
+
+/datum/pai_software/newscaster/install()
+	machine = new machine_type(pai)
+
+/datum/pai_software/newscaster/activate()
+	machine.attack_hand(pai);
+
 /datum/pai_software/simple// Tons of software literally embed an item into the pAI
-	var/obj/simple_item
-	var/mode = SIMPLEMODE_HAND // Whether we should access ui_interact or just attack_hand
+	var/obj/item/simple_item
+	var/simple_item_type
+	var/mode = SIMPLEMODE_HAND // Whether we should access ui_interact, attack_hand or attack_self
 
 /datum/pai_software/simple/install()
-	simple_item = new(pai)
+	simple_item = new simple_item_type(pai)
 
 /datum/pai_software/simple/activate()
 	switch(mode)
@@ -100,30 +113,24 @@
 /datum/pai_software/simple/internal_gps
 	name = "Internal GPS"
 	cost = 35
-	simple_item = /obj/item/gps/pai
-
-/datum/pai_software/simple/newscaster
-	name = "Newscaster"
-	cost = 20
-	simple_item = /obj/machinery/newscaster
-	mode = SIMPLEMODE_UI
+	simple_item_type = /obj/item/gps/pai
 
 /datum/pai_software/simple/instrument
 	name = "Loudness Booster"
 	cost = 20
-	simple_item = /obj/item/instrument/piano_synth
+	simple_item_type = /obj/item/instrument/piano_synth
 	mode = SIMPLEMODE_UI
 
 /datum/pai_software/simple/signaler
 	name = "Remote Signaler"
 	cost = 20
-	simple_item = /obj/item/assembly/signaler/internal
+	simple_item_type = /obj/item/assembly/signaler/internal
 	mode = SIMPLEMODE_UI
 
 /datum/pai_software/simple/analyzer
 	name = "Atmosphere Analyzer"
 	cost = 5
-	simple_item = /obj/item/analyzer
+	simple_item_type = /obj/item/analyzer
 	mode = SIMPLEMODE_SELF
 
 #undef SIMPLEMODE_HAND
