@@ -18,6 +18,7 @@
 
 /datum/pai_software
 	var/name = ""
+	var/desc = ""
 	var/cost = 0 // Cost in RAM for this software
 	var/mob/living/silicon/pai/pai // Reference to the pAI we belong to
 
@@ -29,6 +30,7 @@
 
 /datum/pai_software/crew_manifest
 	name = "Crew Manifest"
+	desc = "Shows all crew and their assigned jobs."
 	cost = 5
 
 /datum/pai_software/crew_manifest/activate()
@@ -36,6 +38,7 @@
 
 /datum/pai_software/encryption_keys
 	name = "Radio Encryption Keys"
+	desc = "Allows your radio to interface with physical encryption keys, allowing you to speak on private channels."
 	cost = 25
 
 /datum/pai_software/encryption_keys/install()
@@ -47,6 +50,7 @@
 
 /datum/pai_software/security_hud
 	name = "Security HUD"
+	desc = "View criminal record status as well as whether someone has a mindshield implant at a quick glance."
 	cost = 20
 	var/secHUD = FALSE
 
@@ -64,6 +68,7 @@
 
 /datum/pai_software/medical_hud
 	name = "Medical HUD"
+	desc = "View basic health and disease status at a quick glance."
 	cost = 20
 	var/medHUD = FALSE
 
@@ -81,6 +86,7 @@
 
 /datum/pai_software/translator
 	name = "Universal Translator"
+	desc = "A database of all known languages and assisted translation between them."
 	cost = 35
 
 /datum/pai_software/translator/install()
@@ -91,6 +97,7 @@
 
 /datum/pai_software/newscaster
 	name = "Newscaster"
+	desc = "Used to send and receive news announcements station-wide!"
 	cost = 20
 	var/obj/machinery/newscaster/machine
 	var/machine_type = /obj/machinery/newscaster
@@ -124,23 +131,27 @@
 
 /datum/pai_software/simple/internal_gps
 	name = "Internal GPS"
+	desc = "Allows you to track your location on a galactic scale."
 	cost = 35
 	simple_item_type = /obj/item/gps/pai
 
 /datum/pai_software/simple/instrument
 	name = "Loudness Booster"
+	desc = "Firmware package for synthesizing musical notes with accurate enough time to be mistaken as music."
 	cost = 20
 	simple_item_type = /obj/item/instrument/piano_synth
 	mode = SIMPLEMODE_UI
 
 /datum/pai_software/simple/signaler
 	name = "Remote Signaler"
+	desc = "An integrated remote signaler. Useful for triggering various devices."
 	cost = 20
 	simple_item_type = /obj/item/assembly/signaler/internal
 	mode = SIMPLEMODE_UI
 
 /datum/pai_software/simple/analyzer
 	name = "Atmosphere Analyzer"
+	desc = "A tool that allows you to analyze the local atmospheric composition."
 	cost = 5
 	simple_item_type = /obj/item/analyzer
 	mode = SIMPLEMODE_SELF
