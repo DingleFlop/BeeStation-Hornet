@@ -2,6 +2,19 @@
 #define SIMPLEMODE_UI 1
 #define SIMPLEMODE_SELF 2
 
+/mob/living/silicon/pai
+	var/list/available_software = list(
+		/datum/pai_software/crew_manifest,
+		/datum/pai_software/encryption_keys,
+		/datum/pai_software/security_hud,
+		/datum/pai_software/medical_hud,
+		/datum/pai_software/translator,
+		/datum/pai_software/newscaster,
+		/datum/pai_software/simple/instrument,
+		/datum/pai_software/simple/internal_gps,
+		/datum/pai_software/simple/signaler,
+		/datum/pai_software/simple/analyzer
+	)
 
 /datum/pai_software
 	var/name = ""
@@ -29,7 +42,7 @@
 	activate()
 
 /datum/pai_software/encryption_keys/activate()
-	to_chat(pai, "<span class='notice'>You have [!pai.radio.subspace_transmission  ? "enabled" : "disabled"] encrypted radio frequencies.</span>")
+	to_chat(pai, "<span class='notice'>You have [!pai.radio.subspace_transmission ? "enabled" : "disabled"] encrypted radio frequencies.</span>")
 	pai.radio.subspace_transmission = !pai.radio.subspace_transmission
 
 /datum/pai_software/security_hud
@@ -131,6 +144,9 @@
 	cost = 5
 	simple_item_type = /obj/item/analyzer
 	mode = SIMPLEMODE_SELF
+
+/datum/pai_software/complex
+	var/ui_data
 
 #undef SIMPLEMODE_HAND
 #undef SIMPLEMODE_UI

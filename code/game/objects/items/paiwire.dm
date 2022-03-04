@@ -4,14 +4,18 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "wire1"
 	item_flags = NOBLUDGEON
-	var/obj/machinery/machine //what machine we're currently hacking.
+	var/mob/living/silicon/pai/pai // Reference to the pAI we belong to
 
-/obj/item/pai_cable/machine/Destroy()
-	machine = null
-	return ..()
+/obj/item/pai_cable/pre_attack(atom/target, mob/living/user, params)
+	. = ..()
+	if(get_dist(user, target) > 1)
+		return FALSE
+	if(istype(target, /obj/machinery))
+		var/obj/machinery/machine = target
 
-/obj/item/pai_cable/proc/plugin(obj/machinery/M, mob/living/user)
-	if(!user.transferItemToLoc(src, M))
-		return
-	user.visible_message("[user] inserts [src] into a data port on [M].", "<span class='notice'>You insert [src] into a data port on [M].</span>", "<span class='italics'>You hear the satisfying click of a wire jack fastening into place.</span>")
-	machine = M
+		user.visible_message("[user] inserts [src] into a data port on [machine].",\
+		"<span class='notice'>You insert [src] into a data port on [machine].</span>",\
+		"<span class='italics'>You hear the satisfying click of a wire jack fastening into place.</span>")
+
+		pai.target_machine = machine
+		// TODO: Register atom move signal to check distance. Otherwise, we're still connected.

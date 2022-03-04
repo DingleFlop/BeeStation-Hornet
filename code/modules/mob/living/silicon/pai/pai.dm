@@ -47,8 +47,8 @@
 	var/speakDoubleExclamation = "alarms"
 	var/speakQuery = "queries"
 
-	/// The cable we produce when hacking a door
-	var/obj/item/pai_cable/hacking_cable
+	/// The machine we are currently plugged into
+	var/obj/machinery/target_machine
 	/// Name of the one who commands us
 	var/master
 	/// DNA string for owner verification
@@ -60,28 +60,7 @@
 	var/secHUD = FALSE
 	/// Toggles whether the Medical  HUD is active or not
 	var/medHUD = FALSE
-	/// Toggles whether universal translator has been activated. Cannot be reversed
-	var/languages_granted = FALSE
-	/// The airlock being hacked
-	var/obj/machinery/door/hackdoor
-	/// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
-	var/hackprogress = 0
 
-	// Software
-	/// Atmospheric analyzer
-	var/obj/item/analyzer/atmos_analyzer
-	/// AI's signaler
-	var/obj/item/assembly/signaler/internal/signaler
-	/// Synthesizer
-	var/obj/item/instrument/piano_synth/internal_instrument
-	/// pAI Newscaster
-	var/obj/machinery/newscaster/newscaster
-	/// pAI healthanalyzer
-	var/obj/item/healthanalyzer/hostscan
-	/// Internal pAI GPS, enabled if pAI downloads GPS software, and then uses it.
-	var/obj/item/gps/pai/internal_gps = null
-
-	var/encryptmod = FALSE
 	var/holoform = FALSE
 	var/canholo = TRUE
 	var/can_transmit = TRUE
@@ -99,11 +78,7 @@
 	var/emitteroverloadcd = 100
 	var/emittersemicd = FALSE
 
-	var/overload_ventcrawl = 0
-	var/overload_bulletblock = 0	//Why is this a good idea?
-	var/overload_maxhealth = 0
 	var/silent = FALSE
-
 
 /mob/living/silicon/pai/can_unbuckle()
 	return FALSE
@@ -131,13 +106,7 @@
 	return ..()
 
 /mob/living/silicon/pai/Destroy()
-	QDEL_NULL(atmos_analyzer)
-	QDEL_NULL(internal_instrument)
-	QDEL_NULL(internal_gps)
-	QDEL_NULL(hacking_cable)
-	QDEL_NULL(newscaster)
-	QDEL_NULL(signaler)
-	QDEL_NULL(hostscan)
+	//TODO: Cleanup our software datums
 	if (loc != card)
 		card.forceMove(drop_location())
 	card.pai = null
@@ -158,9 +127,6 @@
 	forceMove(P)
 	card = P
 	job = "Personal AI"
-	signaler = new /obj/item/assembly/signaler/internal(src)
-	hostscan = new /obj/item/healthanalyzer(src)
-	atmos_analyzer = new /obj/item/analyzer(src)
 	if(!radio)
 		radio = new /obj/item/radio/headset/silicon/pai(src)
 	newscaster = new /obj/machinery/newscaster(src)
